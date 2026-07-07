@@ -27,7 +27,12 @@ body {
     background-color: var(--bg-color);
     color: var(--text-primary);
     line-height: 1.6;
+    /* Safe-area insets for iPhone notch / home bar */
     padding: 20px;
+    padding-top: calc(20px + env(safe-area-inset-top));
+    padding-bottom: calc(20px + env(safe-area-inset-bottom));
+    padding-left: calc(20px + env(safe-area-inset-left));
+    padding-right: calc(20px + env(safe-area-inset-right));
 }
 
 .container {
@@ -603,16 +608,27 @@ tbody tr:hover {
 @media (max-width: 768px) {
     body {
         padding: 10px;
+        padding-top: calc(10px + env(safe-area-inset-top));
+        padding-bottom: calc(10px + env(safe-area-inset-bottom));
+        padding-left: calc(10px + env(safe-area-inset-left));
+        padding-right: calc(10px + env(safe-area-inset-right));
     }
 
     .header {
         flex-direction: column;
         gap: 15px;
         text-align: center;
+        padding: 20px 16px;
     }
 
     .header h1 {
         font-size: 1.5rem;
+    }
+
+    /* Larger tap targets for header buttons */
+    .header-actions .btn {
+        min-height: 44px;
+        padding: 10px 18px;
     }
 
     .dashboard {
@@ -623,6 +639,13 @@ tbody tr:hover {
         grid-template-columns: 1fr;
     }
 
+    /* Larger tap targets for form inputs and selects */
+    .form-group input,
+    .form-group select {
+        min-height: 44px;
+        font-size: 16px; /* prevents iOS auto-zoom on focus */
+    }
+
     .filters {
         flex-direction: column;
         align-items: stretch;
@@ -630,6 +653,12 @@ tbody tr:hover {
 
     .filter-group {
         width: 100%;
+    }
+
+    .filter-group input,
+    .filter-group select {
+        min-height: 44px;
+        font-size: 16px;
     }
 
     #customDateRange {
@@ -643,12 +672,13 @@ tbody tr:hover {
         gap: 10px;
     }
 
+    /* Hide table, show cards on mobile */
     .table-container {
-        overflow-x: scroll;
+        display: none;
     }
 
-    table {
-        min-width: 600px;
+    .transaction-cards-list {
+        display: block;
     }
 
     .breakdown-container {
@@ -657,6 +687,22 @@ tbody tr:hover {
 
     .action-buttons {
         flex-direction: column;
+    }
+
+    /* Larger tap targets for all buttons */
+    .btn {
+        min-height: 44px;
+    }
+
+    /* Sort controls full width */
+    .sort-controls {
+        width: 100%;
+    }
+
+    .sort-controls select {
+        flex: 1;
+        min-height: 44px;
+        font-size: 16px;
     }
 }
 
@@ -675,6 +721,16 @@ tbody tr:hover {
 
     section h2 {
         font-size: 1.2rem;
+    }
+
+    /* Compact summary cards on very small screens */
+    .summary-card {
+        padding: 16px;
+        gap: 14px;
+    }
+
+    .card-icon {
+        font-size: 2rem;
     }
 }
 
@@ -696,6 +752,79 @@ tbody tr:hover {
         box-shadow: none;
         page-break-inside: avoid;
     }
+}
+
+/* Transaction Cards — mobile view (hidden on desktop) */
+.transaction-cards-list {
+    display: none;
+}
+
+.transaction-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 14px 16px;
+    margin-bottom: 10px;
+}
+
+.transaction-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 8px;
+}
+
+.transaction-card-name {
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--text-primary);
+    flex: 1;
+    margin-right: 10px;
+}
+
+.transaction-card-amount {
+    font-size: 1.05rem;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.transaction-card-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.transaction-card-date {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+}
+
+.transaction-card-category {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    background: var(--bg-color);
+    border-radius: 4px;
+    padding: 2px 8px;
+}
+
+.transaction-card-notes {
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+    margin-bottom: 10px;
+    font-style: italic;
+}
+
+.transaction-card-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.transaction-card-actions .btn {
+    flex: 1;
+    justify-content: center;
+    min-height: 44px;
 }
 
 /* Made with Bob */

@@ -338,24 +338,26 @@ function handleSortChange() {
     renderTransactions();
 }
 
-// Render transactions table
+// Render transactions table (desktop) and cards (mobile)
 function renderTransactions() {
     const tbody = document.getElementById('transactionsBody');
+    const cardsContainer = document.getElementById('transactionCards');
     let transactions = getAllTransactions();
-    
+
     // Apply filters
     transactions = filterTransactions(transactions, currentFilters);
-    
+
     // Apply sorting
     transactions = sortTransactions(transactions, currentSort);
-    
+
     if (transactions.length === 0) {
         tbody.innerHTML = '<tr class="no-data"><td colspan="7">No transactions found</td></tr>';
+        cardsContainer.innerHTML = '<p class="no-data">No transactions found</p>';
         return;
     }
-    
+
+    // Desktop: table rows
     tbody.innerHTML = transactions.map(transaction => {
-        // Whitelist type to prevent CSS class injection
         const safeType = ['income', 'expenditure'].includes(transaction.type) ? transaction.type : 'expenditure';
         return `
         <tr>
@@ -372,6 +374,32 @@ function renderTransactions() {
                 </div>
             </td>
         </tr>
+        `;
+    }).join('');
+
+    // Mobile: card layout
+    cardsContainer.innerHTML = transactions.map(transaction => {
+        const safeType = ['income', 'expenditure'].includes(transaction.type) ? transaction.type : 'expenditure';
+        const notes = transaction.notes
+            ? `<div class="transaction-card-notes">${escapeHtml(transaction.notes)}</div>`
+            : '';
+        return `
+        <div class="transaction-card">
+            <div class="transaction-card-header">
+                <div class="transaction-card-name">${escapeHtml(transaction.name)}</div>
+                <div class="transaction-card-amount amount-${safeType}">${escapeHtml(formatCurrency(transaction.amount))}</div>
+            </div>
+            <div class="transaction-card-meta">
+                <span class="transaction-card-date">${escapeHtml(formatDate(transaction.date))}</span>
+                <span class="type-badge type-${safeType}">${escapeHtml(transaction.type)}</span>
+                <span class="transaction-card-category">${escapeHtml(transaction.category)}</span>
+            </div>
+            ${notes}
+            <div class="transaction-card-actions">
+                <button class="btn btn-small btn-success" onclick="editTransaction('${escapeHtml(transaction.id)}')">✏️ Edit</button>
+                <button class="btn btn-small btn-danger" onclick="deleteTransactionWithConfirm('${escapeHtml(transaction.id)}')">🗑️ Delete</button>
+            </div>
+        </div>
         `;
     }).join('');
 }

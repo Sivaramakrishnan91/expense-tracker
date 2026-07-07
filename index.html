@@ -2,8 +2,27 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Personal Finance Tracker</title>
+
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+
+    <!-- Theme colour for Android Chrome tab bar -->
+    <meta name="theme-color" content="#2563eb">
+
+    <!-- iOS PWA meta tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Finance">
+
+    <!-- iOS home screen icon -->
+    <link rel="apple-touch-icon" href="icons/icon-180.png">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="icons/icon-32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="icons/icon-16.png">
+
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
@@ -183,6 +202,8 @@
                     </tbody>
                 </table>
             </div>
+            <!-- Mobile card list (shown at ≤600px, hidden on desktop via CSS) -->
+            <div id="transactionCards" class="transaction-cards-list"></div>
         </section>
 
         <!-- Category Breakdown -->
@@ -226,5 +247,16 @@
     <script src="js/storage.js"></script>
     <script src="js/excel.js"></script>
     <script src="js/app.js"></script>
+
+    <!-- Service Worker registration -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function () {
+                navigator.serviceWorker.register('./sw.js')
+                    .then(function (reg) { console.log('SW registered:', reg.scope); })
+                    .catch(function (err) { console.warn('SW registration failed:', err); });
+            });
+        }
+    </script>
 </body>
 </html>

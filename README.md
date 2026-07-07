@@ -1,6 +1,6 @@
 # 💰 Personal Finance Tracker
 
-A simple, user-friendly web application for tracking your income and expenses with Excel integration. No installation required - just open and start tracking!
+A simple, user-friendly web application for tracking your income and expenses with Excel integration. Works in any browser and can be installed as a native-feeling app on Android and iOS — no app store required.
 
 ## ✨ Features
 
@@ -13,19 +13,33 @@ A simple, user-friendly web application for tracking your income and expenses wi
 - **💾 Auto-Save**: All data automatically saved to browser's local storage
 - **🔍 Search & Sort**: Find transactions quickly with search and multiple sort options
 - **📱 Responsive Design**: Works seamlessly on desktop, tablet, and mobile devices
+- **📲 PWA — Installable**: Add to Home Screen on Android and iOS for a full-screen app experience
+- **✈️ Offline Support**: Works without an internet connection after the first load
 
 ## 🚀 Getting Started
 
 ### Prerequisites
 
 - A modern web browser (Chrome, Firefox, Safari, or Edge)
-- No installation or server required!
+- For PWA install prompts: serve the app over HTTP (see below) — opening `index.html` directly as a `file://` URL will not trigger install prompts, though the app still works
+
+### Running via a Local HTTP Server (for PWA features)
+
+**Python (pre-installed on most systems):**
+```bash
+# Python 3
+python -m http.server 8080
+
+# Python 2
+python -m SimpleHTTPServer 8080
+```
+Then open `http://localhost:8080` in your browser.
 
 ### How to Use
 
 1. **Open the Application**
-   - Double-click `index.html` to open in your default browser
-   - Or right-click and select "Open with" your preferred browser
+   - Double-click `index.html` to open in your default browser (basic use), **or**
+   - Serve over HTTP (see above) to get full PWA install support
 
 2. **Add Your First Transaction**
    - Fill in the transaction form:
@@ -135,6 +149,30 @@ When importing, your Excel file should have these columns:
 - No data sent to any server
 - No internet connection required after initial load
 - Clear browser data to remove all transactions
+
+## 📲 Installing as a Mobile App (PWA)
+
+### Android (Chrome)
+1. Open the app in **Chrome** on your Android device (must be served over HTTP/HTTPS — not `file://`)
+2. Tap the **⋮ menu** (top right) → **"Add to Home Screen"** or look for the install banner at the bottom
+3. Confirm — the app appears on your home screen and opens full-screen without the browser address bar
+4. Works fully **offline** after the first load
+
+### iOS (Safari)
+1. Open the app in **Safari** on your iPhone or iPad
+2. Tap the **Share button** (box with arrow at the bottom of Safari)
+3. Scroll down and tap **"Add to Home Screen"**
+4. Confirm the name and tap **"Add"**
+5. The app appears on your home screen and opens full-screen
+
+> **Note:** On iOS, PWAs must be added via Safari specifically. Chrome and other browsers on iOS do not support "Add to Home Screen" for PWAs.
+
+### Desktop (Chrome / Edge)
+1. Open the app in Chrome or Edge served over HTTP
+2. Look for the **install icon** (⊕) in the address bar
+3. Click it to install as a standalone desktop app
+
+---
 
 ## 📱 Browser Compatibility
 
