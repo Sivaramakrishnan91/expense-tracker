@@ -88,8 +88,8 @@ function setupEventListeners() {
     
     // Filter controls
     document.getElementById('dateRangeFilter').addEventListener('change', handleDateRangeChange);
-    document.getElementById('startDate').addEventListener('change', applyFilters);
-    document.getElementById('endDate').addEventListener('change', applyFilters);
+    document.getElementById('startDate').addEventListener('change', handleFilterChange);
+    document.getElementById('endDate').addEventListener('change', handleFilterChange);
     document.getElementById('typeFilter').addEventListener('change', handleFilterChange);
     document.getElementById('categoryFilter').addEventListener('change', handleFilterChange);
     document.getElementById('searchFilter').addEventListener('input', debounce(handleFilterChange, 300));
@@ -286,6 +286,11 @@ function handleFilterChange() {
 
 // Apply all filters
 function applyFilters() {
+    // Refresh non-custom date range in case the day/month has rolled over since page load
+    const dateRangeFilter = document.getElementById('dateRangeFilter').value;
+    if (dateRangeFilter !== 'custom') {
+        currentFilters.dateRange = getDateRange(dateRangeFilter);
+    }
     renderTransactions();
     updateDashboard();
     updateCategoryBreakdown();
@@ -334,22 +339,26 @@ function renderTransactions() {
         return;
     }
     
-    tbody.innerHTML = transactions.map(transaction => `
+    tbody.innerHTML = transactions.map(transaction => {
+        // Whitelist type to prevent CSS class injection
+        const safeType = ['income', 'expenditure'].includes(transaction.type) ? transaction.type : 'expenditure';
+        return `
         <tr>
-            <td>${formatDate(transaction.date)}</td>
-            <td>${transaction.name}</td>
-            <td>${transaction.category}</td>
-            <td><span class="type-badge type-${transaction.type}">${transaction.type}</span></td>
-            <td class="amount-${transaction.type}">${formatCurrency(transaction.amount)}</td>
-            <td>${transaction.notes || '-'}</td>
+            <td>${escapeHtml(formatDate(transaction.date))}</td>
+            <td>${escapeHtml(transaction.name)}</td>
+            <td>${escapeHtml(transaction.category)}</td>
+            <td><span class="type-badge type-${safeType}">${escapeHtml(transaction.type)}</span></td>
+            <td class="amount-${safeType}">${escapeHtml(formatCurrency(transaction.amount))}</td>
+            <td>${escapeHtml(transaction.notes || '-')}</td>
             <td>
                 <div class="action-buttons">
-                    <button class="btn btn-small btn-success" onclick="editTransaction('${transaction.id}')">✏️ Edit</button>
-                    <button class="btn btn-small btn-danger" onclick="deleteTransactionWithConfirm('${transaction.id}')">🗑️ Delete</button>
+                    <button class="btn btn-small btn-success" onclick="editTransaction('${escapeHtml(transaction.id)}')">✏️ Edit</button>
+                    <button class="btn btn-small btn-danger" onclick="deleteTransactionWithConfirm('${escapeHtml(transaction.id)}')">🗑️ Delete</button>
                 </div>
             </td>
         </tr>
-    `).join('');
+        `;
+    }).join('');
 }
 
 // Update dashboard summary
@@ -392,13 +401,13 @@ function updateCategoryBreakdown() {
                 return `
                     <div class="breakdown-item">
                         <div class="breakdown-info">
-                            <div class="breakdown-category">${category}</div>
-                            <div class="breakdown-percentage">${percentage}%</div>
+                            <div class="breakdown-category">${escapeHtml(category)}</div>
+                            <div class="breakdown-percentage">${escapeHtml(percentage)}%</div>
                             <div class="breakdown-bar">
-                                <div class="breakdown-bar-fill breakdown-bar-income" style="width: ${percentage}%"></div>
+                                <div class="breakdown-bar-fill breakdown-bar-income" style="width: ${escapeHtml(percentage)}%"></div>
                             </div>
                         </div>
-                        <div class="breakdown-amount amount-income">${formatCurrency(amount)}</div>
+                        <div class="breakdown-amount amount-income">${escapeHtml(formatCurrency(amount))}</div>
                     </div>
                 `;
             }).join('');
@@ -416,13 +425,13 @@ function updateCategoryBreakdown() {
                 return `
                     <div class="breakdown-item">
                         <div class="breakdown-info">
-                            <div class="breakdown-category">${category}</div>
-                            <div class="breakdown-percentage">${percentage}%</div>
+                            <div class="breakdown-category">${escapeHtml(category)}</div>
+                            <div class="breakdown-percentage">${escapeHtml(percentage)}%</div>
                             <div class="breakdown-bar">
-                                <div class="breakdown-bar-fill breakdown-bar-expense" style="width: ${percentage}%"></div>
+                                <div class="breakdown-bar-fill breakdown-bar-expense" style="width: ${escapeHtml(percentage)}%"></div>
                             </div>
                         </div>
-                        <div class="breakdown-amount amount-expenditure">${formatCurrency(amount)}</div>
+                        <div class="breakdown-amount amount-expenditure">${escapeHtml(formatCurrency(amount))}</div>
                     </div>
                 `;
             }).join('');

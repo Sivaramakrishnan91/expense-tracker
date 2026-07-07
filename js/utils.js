@@ -1,5 +1,15 @@
 // Utility functions for the expense tracker application
 
+// Escape HTML special characters to prevent XSS when interpolating into innerHTML
+function escapeHtml(str) {
+    return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+}
+
 // Categories for income and expenditure
 const CATEGORIES = {
     income: [
@@ -39,8 +49,10 @@ function formatCurrency(amount) {
 
 // Format date for display
 function formatDate(dateString) {
-    const date = new Date(dateString);
-    return new Intl.DateFormat('en-IN', {
+    // Parse YYYY-MM-DD as local date (not UTC) to avoid off-by-one-day in UTC+ timezones
+    const [year, month, day] = dateString.split('-').map(Number);
+    const date = new Date(year, month - 1, day);
+    return new Intl.DateTimeFormat('en-IN', {
         year: 'numeric',
         month: 'short',
         day: 'numeric'
@@ -50,7 +62,10 @@ function formatDate(dateString) {
 // Get today's date in YYYY-MM-DD format
 function getTodayDate() {
     const today = new Date();
-    return today.toISOString().split('T')[0];
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, '0');
+    const day = String(today.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
 }
 
 // Generate unique ID
@@ -126,9 +141,17 @@ function getDateRange(filterType, customStart = null, customEnd = null) {
             return null;
     }
 
+    // Use local date parts to avoid UTC off-by-one in UTC+ timezones
+    const toLocalDateString = (d) => {
+        const y = d.getFullYear();
+        const m = String(d.getMonth() + 1).padStart(2, '0');
+        const day = String(d.getDate()).padStart(2, '0');
+        return `${y}-${m}-${day}`;
+    };
+
     return {
-        start: startDate.toISOString().split('T')[0],
-        end: endDate.toISOString().split('T')[0]
+        start: toLocalDateString(startDate),
+        end: toLocalDateString(endDate)
     };
 }
 

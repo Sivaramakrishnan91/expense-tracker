@@ -331,6 +331,16 @@ section h2 {
 
 .table-container {
     overflow-x: auto;
+    overflow-y: auto;
+    /* 10 data rows × 45px per row + 48px thead = 498px */
+    max-height: 498px;
+}
+
+.table-container thead th {
+    position: sticky;
+    top: 0;
+    background-color: var(--bg-color);
+    z-index: 1;
 }
 
 table {

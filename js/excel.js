@@ -143,11 +143,26 @@ function importFromExcel(file) {
                         let parsedDate;
                         if (typeof date === 'number') {
                             // Excel date serial number
-                            parsedDate = XLSX.SSF.parse_date_code(date);
-                            parsedDate = `${parsedDate.y}-${String(parsedDate.m).padStart(2, '0')}-${String(parsedDate.d).padStart(2, '0')}`;
+                            const d = XLSX.SSF.parse_date_code(date);
+                            parsedDate = `${d.y}-${String(d.m).padStart(2, '0')}-${String(d.d).padStart(2, '0')}`;
                         } else {
-                            // String date
-                            parsedDate = new Date(date).toISOString().split('T')[0];
+                            // String date — normalise to YYYY-MM-DD without UTC conversion
+                            const str = date.toString().trim();
+                            // Already YYYY-MM-DD
+                            if (/^\d{4}-\d{2}-\d{2}$/.test(str)) {
+                                parsedDate = str;
+                            } else {
+                                // Try to parse via Date and extract local parts
+                                const d = new Date(str);
+                                if (isNaN(d.getTime())) {
+                                    errors.push(`Row ${index + 2}: Invalid date "${date}"`);
+                                    return;
+                                }
+                                const y = d.getFullYear();
+                                const m = String(d.getMonth() + 1).padStart(2, '0');
+                                const day = String(d.getDate()).padStart(2, '0');
+                                parsedDate = `${y}-${m}-${day}`;
+                            }
                         }
 
                         // Validate type
@@ -235,7 +250,7 @@ function handleFileSelect(event) {
 
     // Show loading state
     const importBtn = document.getElementById('importBtn');
-    const originalText = importBtn.textContent;
+    const originalText = importBtn.textContent.trim();
     importBtn.textContent = '⏳ Importing...';
     importBtn.disabled = true;
 
@@ -283,16 +298,10 @@ function showImportConfirmation(transactions, summary) {
         const success = importTransactions(transactions, false);
         if (success) {
             showNotification(`Successfully imported ${transactions.length} transaction(s)!`, 'success');
-            // Refresh the display
-            if (typeof renderTransactions === 'function') {
-                renderTransactions();
-            }
-            if (typeof updateDashboard === 'function') {
-                updateDashboard();
-            }
-            if (typeof updateCategoryBreakdown === 'function') {
-                updateCategoryBreakdown();
-            }
+            // Switch to "All Time" so imported transactions from any month are visible
+            document.getElementById('dateRangeFilter').value = 'all';
+            // Use applyFilters so currentFilters is fully refreshed before rendering
+            applyFilters();
         } else {
             showNotification('Failed to import transactions', 'error');
         }
