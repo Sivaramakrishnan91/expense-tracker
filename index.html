@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monthly Expense Tracker</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1>💰 Monthly Expense Tracker</h1>
+            <div class="header-actions">
+                <button id="importBtn" class="btn btn-secondary" title="Import from Excel">
+                    📥 Import
+                </button>
+                <button id="exportBtn" class="btn btn-secondary" title="Export to Excel">
+                    📤 Export
+                </button>
+            </div>
+        </header>
+
+        <!-- Summary Dashboard -->
+        <section class="dashboard">
+            <div class="summary-card income-card">
+                <div class="card-icon">📈</div>
+                <div class="card-content">
+                    <h3>Total Income</h3>
+                    <p class="amount" id="totalIncome">₹0.00</p>
+                </div>
+            </div>
+            <div class="summary-card expense-card">
+                <div class="card-icon">📉</div>
+                <div class="card-content">
+                    <h3>Total Expenses</h3>
+                    <p class="amount" id="totalExpenses">₹0.00</p>
+                </div>
+            </div>
+            <div class="summary-card balance-card">
+                <div class="card-icon">💵</div>
+                <div class="card-content">
+                    <h3>Net Balance</h3>
+                    <p class="amount" id="netBalance">₹0.00</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Transaction Form -->
+        <section class="transaction-form-section">
+            <h2>
+                <span id="formTitle">Add Transaction</span>
+                <button id="cancelEditBtn" class="btn btn-link" style="display: none;">Cancel</button>
+            </h2>
+            <form id="transactionForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="transactionDate">Date *</label>
+                        <input type="date" id="transactionDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="transactionType">Type *</label>
+                        <select id="transactionType" required>
+                            <option value="">Select Type</option>
+                            <option value="income">Income</option>
+                            <option value="expenditure">Expenditure</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="transactionName">Name *</label>
+                        <input type="text" id="transactionName" placeholder="e.g., Salary, Groceries" maxlength="100" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="transactionAmount">Amount (₹) *</label>
+                        <input type="number" id="transactionAmount" placeholder="0.00" step="0.01" min="0" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="transactionCategory">Category *</label>
+                        <select id="transactionCategory" required>
+                            <option value="">Select Category</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="transactionNotes">Notes</label>
+                        <input type="text" id="transactionNotes" placeholder="Optional notes" maxlength="500">
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary" id="submitBtn">Add Transaction</button>
+                </div>
+            </form>
+        </section>
+
+        <!-- Filters -->
+        <section class="filters-section">
+            <h2>Filters</h2>
+            <div class="filters">
+                <div class="filter-group">
+                    <label for="dateRangeFilter">Date Range</label>
+                    <select id="dateRangeFilter">
+                        <option value="all">All Time</option>
+                        <option value="thisMonth" selected>This Month</option>
+                        <option value="lastMonth">Last Month</option>
+                        <option value="last3Months">Last 3 Months</option>
+                        <option value="custom">Custom Range</option>
+                    </select>
+                </div>
+                <div class="filter-group" id="customDateRange" style="display: none;">
+                    <label for="startDate">From</label>
+                    <input type="date" id="startDate">
+                    <label for="endDate">To</label>
+                    <input type="date" id="endDate">
+                </div>
+                <div class="filter-group">
+                    <label for="typeFilter">Type</label>
+                    <select id="typeFilter">
+                        <option value="all">All</option>
+                        <option value="income">Income</option>
+                        <option value="expenditure">Expenditure</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="categoryFilter">Category</label>
+                    <select id="categoryFilter">
+                        <option value="all">All Categories</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="searchFilter">Search</label>
+                    <input type="text" id="searchFilter" placeholder="Search by name...">
+                </div>
+                <button id="clearFiltersBtn" class="btn btn-secondary">Clear Filters</button>
+            </div>
+        </section>
+
+        <!-- Transaction List -->
+        <section class="transactions-section">
+            <div class="section-header">
+                <h2>Transactions</h2>
+                <div class="sort-controls">
+                    <label for="sortBy">Sort by:</label>
+                    <select id="sortBy">
+                        <option value="date-desc">Date (Newest)</option>
+                        <option value="date-asc">Date (Oldest)</option>
+                        <option value="amount-desc">Amount (High to Low)</option>
+                        <option value="amount-asc">Amount (Low to High)</option>
+                        <option value="name-asc">Name (A-Z)</option>
+                        <option value="name-desc">Name (Z-A)</option>
+                    </select>
+                </div>
+            </div>
+            <div class="table-container">
+                <table id="transactionsTable">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Name</th>
+                            <th>Category</th>
+                            <th>Type</th>
+                            <th>Amount</th>
+                            <th>Notes</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="transactionsBody">
+                        <tr class="no-data">
+                            <td colspan="7">No transactions found. Add your first transaction above!</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Category Breakdown -->
+        <section class="breakdown-section">
+            <h2>Category Breakdown</h2>
+            <div class="breakdown-container">
+                <div class="breakdown-column">
+                    <h3 class="income-title">Income Categories</h3>
+                    <div id="incomeBreakdown" class="breakdown-list">
+                        <p class="no-data">No income transactions</p>
+                    </div>
+                </div>
+                <div class="breakdown-column">
+                    <h3 class="expense-title">Expense Categories</h3>
+                    <div id="expenseBreakdown" class="breakdown-list">
+                        <p class="no-data">No expense transactions</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Hidden file input for import -->
+    <input type="file" id="fileInput" accept=".xlsx,.xls" style="display: none;">
+
+    <!-- Modal for confirmations -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <h3 id="modalTitle">Confirm Action</h3>
+            <p id="modalMessage">Are you sure?</p>
+            <div class="modal-actions">
+                <button id="modalConfirm" class="btn btn-primary">Confirm</button>
+                <button id="modalCancel" class="btn btn-secondary">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="lib/xlsx.full.min.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/storage.js"></script>
+    <script src="js/excel.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

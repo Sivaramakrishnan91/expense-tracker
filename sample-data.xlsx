@@ -1,0 +1,14 @@
+Date,Name,Amount,Type,Category,Notes
+2026-07-01,Monthly Salary,50000,income,Salary,July salary
+2026-07-02,Groceries,2500,expenditure,Groceries,Weekly shopping
+2026-07-03,Electricity Bill,1200,expenditure,Utilities,Monthly bill
+2026-07-05,Freelance Project,15000,income,Freelance,Website development
+2026-07-07,Restaurant Dinner,1800,expenditure,Food & Dining,Family dinner
+2026-07-10,Fuel,3000,expenditure,Transportation,Monthly fuel
+2026-07-12,Movie Tickets,800,expenditure,Entertainment,Weekend movie
+2026-07-15,Medical Checkup,2000,expenditure,Healthcare,Annual checkup
+2026-07-18,Online Shopping,4500,expenditure,Shopping,Clothes and accessories
+2026-07-20,House Rent,15000,expenditure,Rent/Mortgage,Monthly rent
+2026-07-22,Investment Returns,5000,income,Investment Returns,Mutual fund returns
+2026-07-25,Internet Bill,999,expenditure,Utilities,Monthly broadband
+2026-07-28,Gym Membership,1500,expenditure,Personal Care,Quarterly membership
