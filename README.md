@@ -1,6 +1,6 @@
-# 💰 Monthly Expense Tracker
+# 💰 Personal Finance Tracker
 
-A simple, user-friendly web application for tracking monthly income and expenses with Excel integration. No installation required - just open and start tracking!
+A simple, user-friendly web application for tracking your income and expenses with Excel integration. No installation required - just open and start tracking!
 
 ## ✨ Features
 
@@ -99,9 +99,11 @@ When importing, your Excel file should have these columns:
 1. **Regular Updates**: Add transactions daily for accurate tracking
 2. **Use Categories**: Proper categorization helps with analysis
 3. **Add Notes**: Include details for future reference
-4. **Regular Exports**: Export monthly for backup and records
-5. **Filter by Month**: Use "This Month" filter for current month overview
-6. **Check Balance**: Monitor net balance to stay within budget
+4. **Regular Exports**: Export to Excel regularly and save files in a safe place — this is your only backup
+5. **Avoid Incognito Mode**: Data is wiped when an incognito/private window closes
+6. **Don't Move the Folder**: Opening `index.html` from a different path makes existing data appear missing
+7. **Filter by Month**: Use "This Month" filter for current month overview
+8. **Check Balance**: Monitor net balance to stay within budget
 
 ## 🔧 Features in Detail
 
@@ -123,7 +125,7 @@ When importing, your Excel file should have these columns:
 
 ### Data Management
 - **LocalStorage**: Data saved automatically in browser
-- **Import**: Merge or replace existing data
+- **Import**: Merge existing data on import
 - **Export**: Download as Excel with summary
 - **Validation**: Automatic data validation on entry
 
@@ -174,7 +176,7 @@ When importing, your Excel file should have these columns:
 ### Restore from Backup
 1. Click "📥 Import"
 2. Select your backup Excel file
-3. Choose to merge or replace existing data
+3. Confirm — existing transactions are kept and only new ones are added (duplicates are skipped automatically)
 
 ## 📞 Support
 
@@ -191,9 +193,10 @@ This project is free to use for personal and commercial purposes.
 
 ### Version 1.0 (Current)
 - Initial release
-- Core transaction management
+- Core transaction management (income & expenditure)
 - Excel import/export
 - Category breakdown
+- Flexible date range filters
 - Responsive design
 - LocalStorage integration
 

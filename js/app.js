@@ -1,4 +1,4 @@
-// Main application logic for expense tracker
+// Main application logic for Personal Finance Tracker
 
 // Global state
 let currentEditId = null;
@@ -18,7 +18,10 @@ document.addEventListener('DOMContentLoaded', function() {
 function initializeApp() {
     // Set today's date as default
     document.getElementById('transactionDate').value = getTodayDate();
-    
+
+    // Show backup reminder banner unless previously dismissed
+    initBackupBanner();
+
     // Populate category dropdowns
     populateCategoryDropdowns();
     
@@ -28,7 +31,19 @@ function initializeApp() {
     // Load and display data
     loadInitialData();
     
-    console.log('Expense Tracker initialized successfully!');
+    console.log('Personal Finance Tracker initialized successfully!');
+}
+
+function initBackupBanner() {
+    const banner = document.getElementById('backupBanner');
+    if (localStorage.getItem('backupBannerDismissed') === 'true') {
+        banner.classList.add('hidden');
+        return;
+    }
+    document.getElementById('dismissBanner').addEventListener('click', function () {
+        banner.classList.add('hidden');
+        localStorage.setItem('backupBannerDismissed', 'true');
+    });
 }
 
 // Populate category dropdowns based on transaction type

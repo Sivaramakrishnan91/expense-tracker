@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Monthly Expense Tracker</title>
+    <title>Personal Finance Tracker</title>
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
     <div class="container">
         <!-- Header -->
         <header class="header">
-            <h1>💰 Monthly Expense Tracker</h1>
+            <h1>💰 Personal Finance Tracker</h1>
             <div class="header-actions">
                 <button id="importBtn" class="btn btn-secondary" title="Import from Excel">
                     📥 Import
@@ -20,6 +20,16 @@
                 </button>
             </div>
         </header>
+
+        <!-- Backup reminder banner -->
+        <div id="backupBanner" class="backup-banner">
+            <span class="backup-banner-icon">💾</span>
+            <span class="backup-banner-text">
+                <strong>Backup reminder:</strong> Your data is stored only in this browser. Clearing browser data will erase everything permanently.
+                Export to Excel regularly and keep those files in a safe place.
+            </span>
+            <button id="dismissBanner" class="backup-banner-dismiss" title="Dismiss">✕</button>
+        </div>
 
         <!-- Summary Dashboard -->
         <section class="dashboard">

@@ -1,8 +1,8 @@
-# PowerShell Script to Push Expense Tracker to GitHub
+# PowerShell Script to Push Personal Finance Tracker to GitHub
 # This script will help you push your code to GitHub after you create the repository
 
 Write-Host "========================================" -ForegroundColor Cyan
-Write-Host "  Expense Tracker - GitHub Push Script" -ForegroundColor Cyan
+Write-Host "  Personal Finance Tracker - GitHub Push Script" -ForegroundColor Cyan
 Write-Host "========================================" -ForegroundColor Cyan
 Write-Host ""
 

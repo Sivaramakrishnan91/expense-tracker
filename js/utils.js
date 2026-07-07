@@ -1,4 +1,4 @@
-// Utility functions for the expense tracker application
+// Utility functions for Personal Finance Tracker
 
 // Escape HTML special characters to prevent XSS when interpolating into innerHTML
 function escapeHtml(str) {

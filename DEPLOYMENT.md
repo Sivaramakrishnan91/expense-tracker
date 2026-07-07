@@ -2,7 +2,7 @@
 
 ## Overview
 
-This expense tracker is a **static web application** that runs entirely in the browser. It requires **NO server, NO hosting, and NO backend**. However, you have multiple deployment options:
+Personal Finance Tracker is a **static web application** that runs entirely in the browser. It requires **NO server, NO hosting, and NO backend**. However, you have multiple deployment options:
 
 ## 📍 Deployment Options
 
@@ -37,7 +37,7 @@ Simply open `index.html` in your browser:
    cd expense-tracker
    git init
    git add .
-   git commit -m "Initial commit: Expense Tracker"
+   git commit -m "Initial commit: Personal Finance Tracker"
    ```
 
 2. **Push to GitHub**
@@ -166,7 +166,7 @@ To sync data between devices:
 cd expense-tracker
 git init
 git add .
-git commit -m "Initial commit: Monthly Expense Tracker"
+git commit -m "Initial commit: Personal Finance Tracker"
 ```
 
 ### Push to GitHub

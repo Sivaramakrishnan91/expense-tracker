@@ -1,9 +1,9 @@
 #!/bin/bash
-# Bash Script to Push Expense Tracker to GitHub
+# Bash Script to Push Personal Finance Tracker to GitHub
 # This script will help you push your code to GitHub after you create the repository
 
 echo "========================================"
-echo "  Expense Tracker - GitHub Push Script"
+echo "  Personal Finance Tracker - GitHub Push Script"
 echo "========================================"
 echo ""
 

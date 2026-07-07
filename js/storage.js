@@ -1,4 +1,4 @@
-// LocalStorage management for expense tracker
+// LocalStorage management for Personal Finance Tracker
 
 const STORAGE_KEY = 'expenseTrackerData';
 const SETTINGS_KEY = 'expenseTrackerSettings';

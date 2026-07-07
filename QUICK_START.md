@@ -1,9 +1,9 @@
-# 🚀 Quick Start Guide
+# 🚀 Personal Finance Tracker — Quick Start Guide
 
 ## Getting Started in 3 Steps
 
 ### Step 1: Open the Application
-Double-click `index.html` to open the expense tracker in your browser.
+Double-click `index.html` to open the Personal Finance Tracker in your browser.
 
 ### Step 2: Add a Transaction
 1. Fill in the form at the top:
@@ -98,6 +98,6 @@ A: Clear your browser's local storage or delete transactions individually.
 
 ## 🎉 You're Ready!
 
-Start tracking your expenses and take control of your finances!
+Start tracking your finances and take control of your money!
 
 For detailed documentation, see `README.md`.

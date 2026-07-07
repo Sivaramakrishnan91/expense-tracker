@@ -1,6 +1,6 @@
 # 📦 GitHub Setup Guide
 
-## Step-by-Step Instructions to Push Your Expense Tracker to GitHub
+## Step-by-Step Instructions to Push Personal Finance Tracker to GitHub
 
 ### ✅ Prerequisites Completed
 - [x] Git repository initialized
@@ -19,7 +19,7 @@
 
 3. **Fill in the repository details:**
    - **Repository name**: `expense-tracker` (or any name you prefer)
-   - **Description**: "Monthly Expense Tracker with Excel integration - No database required"
+   - **Description**: "Personal Finance Tracker with Excel integration - No database required"
    - **Visibility**: 
      - ✅ **Public** (recommended - anyone can download and use)
      - ⚪ Private (only you can access)
@@ -163,7 +163,7 @@ After pushing, verify:
 
 ## 🎉 You're Done!
 
-Your expense tracker is now on GitHub and ready to share!
+Personal Finance Tracker is now on GitHub and ready to share!
 
 **Share your repository:**
 ```
@@ -174,7 +174,7 @@ https://github.com/YOUR_USERNAME/expense-tracker
 1. Visit your repository
 2. Download the code
 3. Open `index.html` locally
-4. Start tracking their expenses!
+4. Start tracking their finances!
 
 ---
 
